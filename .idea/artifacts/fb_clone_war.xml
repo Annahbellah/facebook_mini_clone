@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="fb-clone:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>fb-clone</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="fb-clone-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="fb-clone:war exploded" />
+    </root>
+  </artifact>
+</component>
