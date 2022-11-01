@@ -10,8 +10,10 @@ public interface UserService {
     User get(Integer id);
     List<User> getAllUsers(String name);
     User update(Integer userId, UserDTO userDTO);
-    User save(User user);
-    Boolean delete(User user);
+
+    User save(UserDTO user);
+
+    Boolean delete(Integer userid);
     List<Comment> getComments(Integer userId);
     List<Comment> getPosts(Integer userId);
 
