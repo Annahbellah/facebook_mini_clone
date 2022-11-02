@@ -1,6 +1,6 @@
 package com.courage.fbclone.model;
 
-import dev.decagon.facebookcloneapp.enums.Gender;
+import com.courage.fbclone.enums.Gender;
 import lombok.*;
 
 

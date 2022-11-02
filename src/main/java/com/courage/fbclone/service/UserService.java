@@ -1,8 +1,9 @@
 package com.courage.fbclone.service;
 
-import dev.decagon.facebookcloneapp.dto.UserDTO;
-import dev.decagon.facebookcloneapp.model.Comment;
-import dev.decagon.facebookcloneapp.model.User;
+
+import com.courage.fbclone.dto.UserDTO;
+import com.courage.fbclone.model.Comment;
+import com.courage.fbclone.model.User;
 
 import java.util.List;
 

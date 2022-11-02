@@ -1,8 +1,9 @@
 package com.courage.fbclone.dao;
 
-import dev.decagon.facebookcloneapp.model.Comment;
-import dev.decagon.facebookcloneapp.model.Post;
-import dev.decagon.facebookcloneapp.model.User;
+import com.courage.fbclone.model.Comment;
+import com.courage.fbclone.model.Post;
+import com.courage.fbclone.model.User;
+
 
 import java.util.List;
 

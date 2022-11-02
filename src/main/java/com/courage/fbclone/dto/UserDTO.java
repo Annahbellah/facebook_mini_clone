@@ -1,6 +1,7 @@
 package com.courage.fbclone.dto;
 
-import dev.decagon.facebookcloneapp.enums.Gender;
+
+import com.courage.fbclone.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

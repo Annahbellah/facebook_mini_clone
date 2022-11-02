@@ -46,22 +46,20 @@ public class UserRepositoryImpl implements UserRepository<User,UserDTO,Integer>{
         User user=new User();
 
         try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("select * from user where email=" + email);
-
+            CallableStatement callableStatement= connection.prepareCall("{call getUserByEmail(?)}");
+            callableStatement.setString(1, email);
+            ResultSet rs=callableStatement.executeQuery();
             if(rs.next())
             {
                 user.setId(rs.getInt("user_id"));
-                user.setEmail(rs.getString("email"));
                 user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
                 user.setGender(Gender.valueOf(rs.getString("gender")));
-
             }
         }catch(SQLException e){
         }
 
-        if(user.getId()>=1) return user;
-        throw new EntityRepositoryExeption("User with "+email+" not found");
+        return  user;
     }
 
     @Override
@@ -105,14 +103,31 @@ public class UserRepositoryImpl implements UserRepository<User,UserDTO,Integer>{
 
     @Override
     public User update(UserDTO user, Integer userId) {
+        updateName(user.getName(), userId);
+        updateEmail(user.getEmail(), userId);
+        return getById(userId);
+    }
 
-        String query = ("UPDATE user SET name=?,email=?,gender=? WHERE user_id=?");
+    public User updateName(String userName, Integer userId) {
+
+        String query = ("UPDATE user SET name=? WHERE user_id="+userId);
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, String.valueOf(userName));
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new EntityRepositoryExeption("Update not successful");
+        }
+        return getById(userId);
+    }
+    public User updateEmail(String email, Integer userId) {
+
+        String query = ("UPDATE user SET email=? WHERE user_id="+userId);
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
 
-            stmt.setString(1, String.valueOf(user.getName()));
-            stmt.setString(2, String.valueOf(user.getEmail()));
-            stmt.setString(3, String.valueOf(user.getGender().name()));
+            stmt.setString(1, String.valueOf(email));
 
             stmt.executeUpdate();
 
@@ -121,7 +136,6 @@ public class UserRepositoryImpl implements UserRepository<User,UserDTO,Integer>{
         }
         return getById(userId);
     }
-
 
     @Override
     public Boolean delete(Integer userId) {
@@ -180,6 +194,28 @@ public class UserRepositoryImpl implements UserRepository<User,UserDTO,Integer>{
 
         return posts;
 
+    }
+
+    public static void main(String[] args) {
+        Connection connection1 = null;
+        try {
+            connection1= ConnectionInitializer.connectToDB("com.mysql.cj.jdbc.Driver",
+                    "jdbc:mysql://localhost:3306/facebook_clone_app",
+                    "root",
+                    "OC@log4.2"
+            );
+        } catch (ClassNotFoundException | SQLException e) {}
+        UserRepositoryImpl userRepository=new UserRepositoryImpl(connection1);
+
+//        UserDTO testUser=UserDTO.builder()
+//                .gender(Gender.MALE)
+//                .email("test2@some.com")
+//                .name("Love")
+//                .build();
+        User user=userRepository.updateName("Courage",14);
+        user=userRepository.updateEmail("courage@gmail.com",14);
+       // System.out.println(userRepository.getById(14));
+        System.out.println(userRepository.getByEmail("courage@gmail.com"));
     }
 
 }
