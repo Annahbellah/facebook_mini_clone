@@ -6,6 +6,7 @@ import dev.decagon.facebookcloneapp.exeption.EntityRepositoryExeption;
 import dev.decagon.facebookcloneapp.model.Comment;
 import dev.decagon.facebookcloneapp.model.Post;
 import dev.decagon.facebookcloneapp.model.User;
+import dev.decagon.facebookcloneapp.util.ConnectionInitializer;
 
 import java.sql.*;
 import java.util.ArrayList;

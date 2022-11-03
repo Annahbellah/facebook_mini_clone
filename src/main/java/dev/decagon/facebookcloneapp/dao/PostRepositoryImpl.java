@@ -88,13 +88,11 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
         @Override
     public Post update(PostDTO post, Integer postId) {
 
-            String query = ("UPDATE post SET text_body=?,user_id=?,likes=? WHERE postId=?");
+            String query = ("UPDATE post SET text_body=? WHERE postId="+postId);
             try {
                 PreparedStatement stmt = connection.prepareStatement(query);
 
                 stmt.setString(1, String.valueOf(post.getTextBody()));
-                stmt.setInt(2, post.getUserId());
-                stmt.setInt(3, post.getLikes());
 
                 stmt.executeUpdate();
 
@@ -136,5 +134,25 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
         }
 
         return posts;
+    }
+
+    @Override
+    public Integer getPostlike(Integer postId) {
+        Integer likes=0;
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("select likes from post where user_id="+postId);
+            if(rs.next())
+            {
+                likes=rs.getInt("likes");
+            }
+        }catch(SQLException e){
+        }
+        return likes;
+    }
+
+    @Override
+    public Integer unlike(Integer postId) {
+        return 0;
     }
 }

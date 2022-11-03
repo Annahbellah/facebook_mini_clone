@@ -25,13 +25,16 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email=(String)request.getAttribute("email");
-        String password=(String)request.getAttribute("password");
+        String email=(String)request.getParameter("email");
+        String password=(String)request.getParameter("password");
+        User user=null;
 
         try {
-            User user=loginService.login(email,password);
+            user=loginService.login(email,password);
 
             request.getSession().setAttribute("user",user);
+            request.getRequestDispatcher("/home.jsp").include(request, response);
+
         }catch (Exception e){
             e.printStackTrace();
         }

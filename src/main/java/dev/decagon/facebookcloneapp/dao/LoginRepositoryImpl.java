@@ -17,11 +17,14 @@ public class LoginRepositoryImpl implements LoginRepository {
     public Login get(String email) {
         Login login=new Login();
         try {
+
             CallableStatement callableStatement= connection.prepareCall("{call getLoginByEmail(?)}");
+
             callableStatement.setString(1, email);
             ResultSet rs=callableStatement.executeQuery();
             if(rs.next())
             {
+
                 login.setUserId(rs.getInt("user_id"));
                 login.setEmail(rs.getString("email"));
                 login.setPassword(rs.getString("password"));

@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(urlPatterns={"/register","/new-user"}  )
+@WebServlet(urlPatterns={"/register","/signup"}  )
 public class RegisterController extends HttpServlet {
     private Connection connection;
     private UserService userService;
@@ -31,17 +31,17 @@ public class RegisterController extends HttpServlet {
         userService=new UserServiceImpl(connection);
         loginService=new LoginServiceImpl(connection);
 
-        String name=(String)request.getAttribute("name");
-        String email=(String)request.getAttribute("email");
-        String genderStr=(String)request.getAttribute("gender");
-        String password=(String)request.getAttribute("password");
+        String name=(String)request.getParameter("name");
+        String email=(String)request.getParameter("email");
+        String genderStr=(String)request.getParameter("gender");
+        String password=(String)request.getParameter("password");
 
 
 
         if(name==null|| email==null||genderStr==null||password==null|| password.length()<8)
             throw new BadAttributesException("Validation failed");
         Gender gender;
-        if(genderStr=="MALE"){ gender=Gender.MALE;}
+        if(genderStr.equals("MALE")){ gender=Gender.MALE;}
         else  gender=Gender.FEMALE;
 
 

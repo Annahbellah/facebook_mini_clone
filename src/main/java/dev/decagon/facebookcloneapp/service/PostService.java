@@ -1,15 +1,12 @@
 package dev.decagon.facebookcloneapp.service;
 
-import dev.decagon.facebookcloneapp.model.Comment;
-import dev.decagon.facebookcloneapp.model.User;
-
-import java.util.List;
+import dev.decagon.facebookcloneapp.dto.PostDTO;
+import dev.decagon.facebookcloneapp.model.Post;
 
 public interface PostService {
-    List<User> likedAPost(Integer userId, Integer postId);
-    Boolean isLikedAPost(Integer userId,Integer postId);
+    Post save(PostDTO post);
+
     void unlikeAPost(Integer userId,Integer postId);
-    void like(Integer userId,Integer postId);
-    List<Comment> comments(Integer postId);
+    Integer like(Integer userId,Integer postId);
 
 }

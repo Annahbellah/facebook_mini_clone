@@ -11,6 +11,7 @@ import dev.decagon.facebookcloneapp.model.Login;
 import dev.decagon.facebookcloneapp.model.User;
 
 import java.sql.Connection;
+import java.util.Objects;
 
 public class LoginServiceImpl implements LoginService {
     private  final Connection connection;
@@ -26,7 +27,7 @@ public class LoginServiceImpl implements LoginService {
     public User login(String email, String password){
 
         Login login=loginRepository.get(email);
-        if(login.getPassword()==password){
+        if(Objects.equals(login.getPassword(), password)){
             return userRepository.getById(login.getUserId());
         }
         throw new LoginException("Wrong login input");
@@ -47,4 +48,5 @@ public class LoginServiceImpl implements LoginService {
         }
         return result;
     }
+    
 }

@@ -9,4 +9,8 @@ public interface PostRepository<T,U,K>{
     T update(U u, K k);
     Boolean delete(K k);
     List<T> userPosts(K k);
+
+    Integer getPostlike(Integer postId);
+
+    Integer unlike(Integer postId);
 }
