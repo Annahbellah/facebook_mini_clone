@@ -6,6 +6,7 @@ import dev.decagon.facebookcloneapp.dto.PostDTO;
 import dev.decagon.facebookcloneapp.model.Post;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class PostServiceImpl implements PostService {
     Connection connection;
@@ -17,16 +18,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post save(PostDTO post) {
-        Post dbPost = new Post();
+    public Boolean save(PostDTO post) {
+        return postRepository.save(post);
 
-        if (postRepository.save(post)) {
-            dbPost.setUserId(post.getUserId());
-            dbPost.setTextBody(post.getTextBody());
-            dbPost.setId(dbPost.getId());
-            dbPost.setLikes(post.getLikes());
-        }
-        return dbPost;
+    }
+
+    @Override
+    public List<Post> getAllPosts() {
+
+        return postRepository.getAll();
+
     }
 
 
@@ -39,6 +40,14 @@ public class PostServiceImpl implements PostService {
     public Integer like(Integer userId, Integer postId) {
         return postRepository.getPostlike(postId);
     }
+
+//    public static void main(String[] args) {
+//        PostService postService=new PostServiceImpl(ConnectionInitializer.getConnected());
+//
+//        PostDTO postdto=PostDTO.builder().textBody("Another post, have fun").likes(0).userName("Courage").userId(17).build();
+//        if(postService.save(postdto))
+//            System.out.println(postService.getAllPosts());
+//    }
 
 }
 

@@ -33,7 +33,8 @@ public class LoginController extends HttpServlet {
             user=loginService.login(email,password);
 
             request.getSession().setAttribute("user",user);
-            request.getRequestDispatcher("/home.jsp").include(request, response);
+            request.getSession().setAttribute("username",user.getName());
+            response.sendRedirect("home");
 
         }catch (Exception e){
             e.printStackTrace();

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class PostDTO {
     private  Integer likes;
     private  String textBody;
+    private  String userName;
     private Integer userId;
 
 }

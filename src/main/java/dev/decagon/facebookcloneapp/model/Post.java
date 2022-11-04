@@ -12,6 +12,7 @@ public class Post {
     private  Integer likes;
     private  String textBody;
     private Integer userId;
+    private  String userName;
 
 
 }

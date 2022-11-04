@@ -47,12 +47,13 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery("select * from post");
-            if(rs.next())
+            while(rs.next())
             {
                 Post post=new Post();
-                post.setId(rs.getInt("user_id"));
+                post.setUserId(rs.getInt("user_id"));
                 post.setId(rs.getInt("post_id"));
                 post.setTextBody(rs.getString("text_body"));
+                post.setUserName(rs.getString("username"));
                 post.setLikes(rs.getInt("likes"));
                 posts.add(post);
 
@@ -66,16 +67,18 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
     @Override
     public Boolean save(PostDTO post) {
         String textbody= post.getTextBody();
+        String username=post.getUserName();
         Integer user_id= post.getUserId();
         Integer likes= post.getLikes();
-        String INSERT_USERS_SQL = "INSERT INTO post (text_body,user_id,likes) VALUES " + " (?, ?, ?);";
+        String INSERT_USERS_SQL = "INSERT INTO post (text_body,user_id,username,likes) VALUES " + " (?, ?,?, ?);";
         Boolean result=false;
         try {
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                 preparedStatement.setString(1, textbody);
                 preparedStatement.setInt(2, user_id);
-                preparedStatement.setInt(3, user_id);
+                preparedStatement.setString(3, username);
+                preparedStatement.setInt(4, likes);
 
                 preparedStatement.executeUpdate();
                 result=true;
@@ -126,6 +129,7 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
                 post.setId(rs.getInt("user_id"));
                 post.setId(rs.getInt("post_id"));
                 post.setTextBody(rs.getString("text_body"));
+                post.setUserName(rs.getString("username"));
                 post.setLikes(rs.getInt("likes"));
                 posts.add(post);
 

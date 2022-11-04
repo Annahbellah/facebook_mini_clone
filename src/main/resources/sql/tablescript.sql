@@ -8,6 +8,7 @@ create table user(
 create table post(
                      post_id int AUTO_INCREMENT PRIMARY KEY not null,
                      text_body varchar(250) NOT NULL,
+                     username varchar(50) not null,
                      user_id int NOT NULL,
                      likes int,
                      foreign key (user_id)
