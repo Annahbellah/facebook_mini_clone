@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(urlPatterns = {"/post"})
+@WebServlet(urlPatterns = {"/newpost","/new-post"})
 public class PostController extends HttpServlet {
 
     private Connection connection;
@@ -42,6 +42,7 @@ public class PostController extends HttpServlet {
                 .textBody(textBody)
                 .likes(0)
                 .build();
+        postService.save(post);
 
         response.sendRedirect("home");
 

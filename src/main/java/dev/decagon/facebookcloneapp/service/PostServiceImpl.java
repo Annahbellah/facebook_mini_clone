@@ -3,6 +3,7 @@ package dev.decagon.facebookcloneapp.service;
 import dev.decagon.facebookcloneapp.dao.PostRepository;
 import dev.decagon.facebookcloneapp.dao.PostRepositoryImpl;
 import dev.decagon.facebookcloneapp.dto.PostDTO;
+import dev.decagon.facebookcloneapp.model.Comment;
 import dev.decagon.facebookcloneapp.model.Post;
 
 import java.sql.Connection;
@@ -41,13 +42,12 @@ public class PostServiceImpl implements PostService {
         return postRepository.getPostlike(postId);
     }
 
-//    public static void main(String[] args) {
-//        PostService postService=new PostServiceImpl(ConnectionInitializer.getConnected());
-//
-//        PostDTO postdto=PostDTO.builder().textBody("Another post, have fun").likes(0).userName("Courage").userId(17).build();
-//        if(postService.save(postdto))
-//            System.out.println(postService.getAllPosts());
-//    }
+    @Override
+    public List<Comment> getCommentsByPostById(Integer postId) {
+        return postRepository.getCommentsByPostId(postId);
+
+    }
+
 
 }
 

@@ -2,6 +2,7 @@ package dev.decagon.facebookcloneapp.dao;
 
 import dev.decagon.facebookcloneapp.dto.PostDTO;
 import dev.decagon.facebookcloneapp.exeption.EntityRepositoryExeption;
+import dev.decagon.facebookcloneapp.model.Comment;
 import dev.decagon.facebookcloneapp.model.Post;
 
 import java.sql.*;
@@ -46,7 +47,7 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
         List<Post> posts=new ArrayList<>();
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("select * from post");
+            ResultSet rs = st.executeQuery("select * from post order by post_id desc");
             while(rs.next())
             {
                 Post post=new Post();
@@ -123,7 +124,7 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery("select * from post where user_id="+userId);
-            if(rs.next())
+            while(rs.next())
             {
                 Post post=new Post();
                 post.setId(rs.getInt("user_id"));
@@ -158,5 +159,30 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
     @Override
     public Integer unlike(Integer postId) {
         return 0;
+    }
+
+    @Override
+    public List<Comment> getCommentsByPostId(Integer postId) {
+        List<Comment> comments=new ArrayList<>();
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("select * from comment where post_id="+postId);
+            rs.next();
+            while(rs.next()){
+                {
+                    Comment comment=new Comment();
+                    comment.setCommentId(rs.getInt("comment_id"));
+                    comment.setPostId(rs.getInt("post_id"));
+                    comment.setTextBody(rs.getString("text_body"));
+                    comment.setUserId(rs.getInt("user_id"));
+                    comment.setLikes(rs.getInt("likes"));
+
+                    comments.add(comment);
+                }
+            }
+        }catch(SQLException e){
+        }
+
+        return comments;
     }
 }

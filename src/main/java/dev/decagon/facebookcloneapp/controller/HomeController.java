@@ -3,6 +3,7 @@ package dev.decagon.facebookcloneapp.controller;
 import dev.decagon.facebookcloneapp.service.PostService;
 import dev.decagon.facebookcloneapp.service.PostServiceImpl;
 import dev.decagon.facebookcloneapp.util.ConnectionInitializer;
+import dev.decagon.facebookcloneapp.util.PostMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,8 +23,7 @@ public class HomeController extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.getSession().setAttribute("posts",postService.getAllPosts());
+        request.getSession().setAttribute("posts", PostMapper.postToViewPost(postService.getAllPosts()));
         request.getRequestDispatcher("home.jsp").forward(request,response);
     }
 

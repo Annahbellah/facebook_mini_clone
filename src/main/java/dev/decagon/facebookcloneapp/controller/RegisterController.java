@@ -25,6 +25,12 @@ public class RegisterController extends HttpServlet {
     private UserService userService;
     private LoginService loginService;
 
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         connection=ConnectionInitializer.getConnected();
@@ -53,6 +59,7 @@ public class RegisterController extends HttpServlet {
         User user=userService.save(userDTO);
         LoginDTO login=new LoginDTO(email,password, user.getId());
         loginService.save(login);
+        response.sendRedirect("login.jsp");
 
 
         ConnectionInitializer.closeDBConnection(connection);

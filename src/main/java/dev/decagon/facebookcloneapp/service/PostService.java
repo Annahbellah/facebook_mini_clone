@@ -1,6 +1,7 @@
 package dev.decagon.facebookcloneapp.service;
 
 import dev.decagon.facebookcloneapp.dto.PostDTO;
+import dev.decagon.facebookcloneapp.model.Comment;
 import dev.decagon.facebookcloneapp.model.Post;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface PostService {
     void unlikeAPost(Integer userId,Integer postId);
     Integer like(Integer userId,Integer postId);
 
+    List<Comment> getCommentsByPostById(Integer postId);
 }
