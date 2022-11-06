@@ -31,4 +31,17 @@ public class PostMapper {
 
 
     }
+    public  static ViewPostDTO postToViewPost(Post post){
+        Connection connection=ConnectionInitializer.getConnected();
+        PostService postService=new PostServiceImpl(connection);
+
+        return ViewPostDTO.builder()
+                    .id(post.getId())
+                    .userId(post.getUserId())
+                    .userName(post.getUserName())
+                    .textBody(post.getTextBody())
+                    .likes(post.getLikes())
+                    .comments(postService.getCommentsByPostById(post.getId()))
+                    .build();
+    }
 }

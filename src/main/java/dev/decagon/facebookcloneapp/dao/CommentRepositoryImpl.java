@@ -64,7 +64,7 @@ public class CommentRepositoryImpl implements CommentRepository<Comment, Comment
         Integer user_id= comment.getUserId();
         Integer post_id= comment.getPostId();
         Integer likes= comment.getLikes();
-        String INSERT_USERS_SQL = "INSERT INTO post (text_body,post_id,user_id,likes) VALUES " + " (?, ?, ?, ?);";
+        String INSERT_USERS_SQL = "INSERT INTO comment (text_body,post_id,user_id,likes) VALUES " + " (?, ?, ?, ?);";
         Boolean result=false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
@@ -81,6 +81,32 @@ public class CommentRepositoryImpl implements CommentRepository<Comment, Comment
         }
         return result;
     }
+
+    @Override
+    public List<Comment> postComments(Integer postId) {
+        List<Comment> comments=new ArrayList<>();
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("select * from comment where post_id="+postId);
+            while(rs.next())
+            {
+                Comment comment=new Comment();
+                comment.setCommentId(rs.getInt("comment_id"));
+                comment.setPostId(rs.getInt("post_id"));
+                comment.setUserId(rs.getInt("user_id"));
+                comment.setTextBody(rs.getString("text_body"));
+                comment.setLikes(rs.getInt("likes"));
+
+                comments.add(comment);
+
+            }
+        }catch(SQLException e){
+        }
+
+        return comments;
+    }
+
+
     @Override
     public Comment update(CommentDTO comment,Integer commentId) {
         return null;

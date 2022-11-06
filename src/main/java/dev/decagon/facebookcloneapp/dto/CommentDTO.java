@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CommentDTO {
+    private  Integer commentId;
     private  Integer userId;
+    private String userName;
     private  Integer postId;
     private  String textBody;
     private  Integer likes;

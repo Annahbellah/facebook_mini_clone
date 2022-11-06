@@ -60,7 +60,7 @@
       <h4><c:out value="${sessionScope.username }"/></h4>
 
     </div>
-    <span class="material-icons"> logout </span>
+    <a href="${pageContext.request.contextPath}/logout"><span class="material-icons"> logout </span></a>
   </div>
 </div>
 <!-- header ends -->
@@ -206,7 +206,7 @@
     <div class="container posts">
       <div class="card">
         <div class="card-header post__top">
-          <div class="row ost__topInfo">
+          <div class="row post__topInfo">
             <h3 class="card-title poster">${tempPost.getUserName()}</h3>
           </div>
         </div>
@@ -216,23 +216,23 @@
           </div>
           <div class="post__options">
             <div class="post__option">
-              <span class="material-icons"> thumb_up </span>
-              <p>${tempPost.getLikes()}</p>
+              <a href="${pageContext.request.contextPath}/likes/?postid=${tempPost.getId()}"> <span class="material-icons"> thumb_up </span>
+              <p>${tempPost.getLikes()}</p></a>
             </div>
 
             <div class="post__option">
-              <span class="material-icons"> chat_bubble_outline </span>
-              <p>Comment</p>
+              <a href="${pageContext.request.contextPath}/comments/?postid=${tempPost.getId()}"> <span class="material-icons"> chat_bubble_outline </span>
+                <p>${tempPost.getComments().size()}</p></a>
             </div>
 
             <div class="post__option">
-              <span class="material-icons"> edit </span>
-              <p>Edit</p>
+              <a href="${pageContext.request.contextPath}/edit/?postid=${tempPost.getId()}"> <span class="material-icons"> edit </span>
+              <p>Edit</p></a>
             </div>
 
             <div class="post__option">
-              <span class="material-icons"> delete </span>
-              <p>Delete</p>
+              <a href="${pageContext.request.contextPath}/delete/?postid=${tempPost.getId()}"> <span class="material-icons"> delete </span>
+              <p>Delete</p></a>
             </div>
           </div>
         </div>
@@ -243,6 +243,7 @@
 
       <!-- post ends -->
     </div>
+
 </c:forEach>
     <!-- feed ends -->
 

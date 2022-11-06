@@ -11,7 +11,13 @@ public interface PostService {
     List<Post>getAllPosts();
 
     void unlikeAPost(Integer userId,Integer postId);
-    Integer like(Integer userId,Integer postId);
+    Integer like(Integer postId);
 
     List<Comment> getCommentsByPostById(Integer postId);
+
+    Boolean delete(Integer postId);
+
+    boolean edit(Integer postId,String message);
+
+    Post get(Integer postid);
 }

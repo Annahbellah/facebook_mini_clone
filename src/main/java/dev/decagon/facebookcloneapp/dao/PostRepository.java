@@ -1,14 +1,15 @@
 package dev.decagon.facebookcloneapp.dao;
 
 import dev.decagon.facebookcloneapp.model.Comment;
+import dev.decagon.facebookcloneapp.model.Post;
 
 import java.util.List;
 
 public interface PostRepository<T,U,K>{
-    T getById(K k);
+    Post getById(Integer postId);
     List<T> getAll();
     Boolean save(U u);
-    T update(U u, K k);
+    Boolean update(String message, Integer postId);
     Boolean delete(K k);
     List<T> userPosts(K k);
 
@@ -17,4 +18,6 @@ public interface PostRepository<T,U,K>{
     Integer unlike(Integer postId);
 
     List<Comment> getCommentsByPostId(Integer postId);
+
+    Integer likeAPost(Integer postId);
 }

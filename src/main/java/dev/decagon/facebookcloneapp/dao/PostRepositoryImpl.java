@@ -90,27 +90,28 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
     }
 
         @Override
-    public Post update(PostDTO post, Integer postId) {
+    public Boolean update(String message, Integer postId) {
 
-            String query = ("UPDATE post SET text_body=? WHERE postId="+postId);
+            String query = ("UPDATE post SET text_body=? WHERE post_id="+postId);
             try {
+                System.out.println("before prepare statement");
                 PreparedStatement stmt = connection.prepareStatement(query);
-
-                stmt.setString(1, String.valueOf(post.getTextBody()));
-
+                System.out.println("after prepare statement");
+                stmt.setString(1, message);
+                System.out.println("The new message: "+message);
                 stmt.executeUpdate();
-
+                System.out.println("update executed");
             } catch (SQLException e) {
                 throw new EntityRepositoryExeption("Update not successful");
             }
-            return getById(postId);
+            return true;
     }
 
     @Override
     public Boolean delete(Integer postId) {
         int rs=0;
         try {
-            PreparedStatement st = connection.prepareStatement("delete from post where id=" + postId);
+            PreparedStatement st = connection.prepareStatement("delete from post where post_id=" + postId);
             rs = st.executeUpdate();
         }catch (SQLException e){}
         if(rs>=1) return true;
@@ -154,6 +155,19 @@ public class PostRepositoryImpl implements PostRepository<Post, PostDTO,Integer>
         }catch(SQLException e){
         }
         return likes;
+    }
+    public Integer likeAPost(Integer postId){
+
+        String query = ("UPDATE post SET likes=? WHERE post_id="+postId);
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            int updatedLikes= getById(postId).getLikes()+1;
+            stmt.setInt(1, updatedLikes);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new EntityRepositoryExeption("Update not successful");
+        }
+        return 1;
     }
 
     @Override

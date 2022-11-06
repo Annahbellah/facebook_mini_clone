@@ -38,14 +38,29 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Integer like(Integer userId, Integer postId) {
-        return postRepository.getPostlike(postId);
+    public Integer like( Integer postId) {
+        return postRepository.likeAPost(postId);
     }
 
     @Override
     public List<Comment> getCommentsByPostById(Integer postId) {
         return postRepository.getCommentsByPostId(postId);
 
+    }
+
+    @Override
+    public Boolean delete(Integer postId) {
+        return postRepository.delete(postId);
+    }
+
+    @Override
+    public boolean edit(Integer postId,String message) {
+        return postRepository.update(message,postId);
+    }
+
+    @Override
+    public Post get(Integer postid) {
+        return postRepository.getById(postid);
     }
 
 

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PostDTO {
+    private  Integer id;
     private  Integer likes;
     private  String textBody;
     private  String userName;

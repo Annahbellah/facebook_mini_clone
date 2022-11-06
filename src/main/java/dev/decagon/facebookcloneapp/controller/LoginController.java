@@ -49,6 +49,12 @@ public class LoginController extends HttpServlet {
         }
 
     }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession().removeAttribute("user");
+        request.getRequestDispatcher("login.jsp").forward(request,response);
+    }
+
     public  void destroy(){
         ConnectionInitializer.closeDBConnection(connection);
     }
